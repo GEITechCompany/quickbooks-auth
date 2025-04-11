@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: quickbooks-oauth
+    env: node
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: QUICKBOOKS_CLIENT_ID
+        value: ABkfuUaBZE10s5fOms8jBJqQ6gH4KcrKJknJgKIZeKxKGqKbFH
+      - key: QUICKBOOKS_CLIENT_SECRET
+        value: yqv1mrepTsdFzabqmGuLv1kmjPEc5QtC1E7zO71c
+      - key: QUICKBOOKS_ENVIRONMENT
+        value: production 

@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "server.js"
+    }
+  ],
+  "env": {
+    "QUICKBOOKS_CLIENT_ID": "ABkfuUaBZE10s5fOms8jBJqQ6gH4KcrKJknJgKIZeKxKGqKbFH",
+    "QUICKBOOKS_CLIENT_SECRET": "yqv1mrepTsdFzabqmGuLv1kmjPEc5QtC1E7zO71c",
+    "QUICKBOOKS_REDIRECT_URI": "https://pool-agent-gei-tech.vercel.app/oauth/callback",
+    "QUICKBOOKS_ENVIRONMENT": "production"
+  }
+} 

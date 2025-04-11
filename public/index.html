@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuickBooks Integration</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    .container {
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #2e7d32;
+    }
+    .button {
+      display: inline-block;
+      background-color: #1976d2;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      text-decoration: none;
+      margin: 5px 0;
+    }
+    .button:hover {
+      background-color: #1565c0;
+    }
+    .mb-20 {
+      margin-bottom: 20px;
+    }
+    .status {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 4px;
+    }
+    .success {
+      background-color: #e8f5e9;
+      color: #2e7d32;
+      display: none;
+    }
+    .note {
+      background-color: #fff3e0;
+      padding: 15px;
+      border-radius: 4px;
+      margin: 20px 0;
+      border-left: 4px solid #ff9800;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>QuickBooks Integration</h1>
+    <p class="mb-20">Choose one of the methods below to connect your QuickBooks account:</p>
+    
+    <h2>Method 1: Direct Server Route</h2>
+    <p>This uses a server-side route that directly redirects to QuickBooks:</p>
+    <a href="/connect-to-quickbooks" class="button">Connect via Server Route</a>
+    
+    <h2>Method 2: Static URL</h2>
+    <p>This uses a pre-configured URL with the correct redirect URI:</p>
+    <a href="https://appcenter.intuit.com/connect/oauth2?client_id=ABkfuUaBZE10s5fOms8jBJqQ6gH4KcrKJknJgKIZeKxKGqKbFH&response_type=code&scope=com.intuit.quickbooks.accounting&redirect_uri=https%3A%2F%2Fpool-agent-gei-tech.vercel.app%2Foauth%2Fcallback&state=static12345" class="button">Connect via Static URL</a>
+    
+    <h2>Method 3: API Route (Original)</h2>
+    <p>This uses the API route, which might be using an inconsistent redirect URI:</p>
+    <a href="#" class="button" id="api-button">Connect via API</a>
+    
+    <div class="note">
+      <strong>Note:</strong> If you're experiencing "Redirect URI is invalid" errors, use Method 1 or Method 2, 
+      which ensure the correct redirect URI is used.
+    </div>
+    
+    <div id="status-message" class="status success"></div>
+  </div>
+
+  <script>
+    // API button handler
+    document.getElementById('api-button').addEventListener('click', async (e) => {
+      e.preventDefault();
+      try {
+        const response = await fetch('/api/auth-url');
+        const data = await response.json();
+        
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          alert('Failed to generate authorization URL');
+        }
+      } catch (error) {
+        alert('Error: ' + error.message);
+      }
+    });
+
+    // Check if we're returning from an OAuth redirect
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('oauth_success')) {
+      const realmId = urlParams.get('realmId');
+      const statusElement = document.getElementById('status-message');
+      statusElement.textContent = `Successfully connected to QuickBooks! Company ID: ${realmId}`;
+      statusElement.style.display = 'block';
+    }
+  </script>
+</body>
+</html> 
