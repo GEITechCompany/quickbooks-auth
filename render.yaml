@@ -4,10 +4,11 @@ services:
     env: node
     buildCommand: npm install
     startCommand: node server.js
+    # Environment variables should be configured in the Render Dashboard
     envVars:
       - key: QUICKBOOKS_CLIENT_ID
-        value: ABkfuUaBZE10s5fOms8jBJqQ6gH4KcrKJknJgKIZeKxKGqKbFH
+        sync: false # Configure this in the Render Dashboard
       - key: QUICKBOOKS_CLIENT_SECRET
-        value: yqv1mrepTsdFzabqmGuLv1kmjPEc5QtC1E7zO71c
+        sync: false # Configure this in the Render Dashboard
       - key: QUICKBOOKS_ENVIRONMENT
-        value: production 
+        value: production
